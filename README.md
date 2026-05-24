@@ -62,7 +62,7 @@ This repository contains a complete path planning pipeline for group 34 of the R
 
 To install the repository, including `gym_pybullet_drones` and the path planning files, find a place in your directory to store and enter the following commands in your terminal:
 ```sh
-git clone https://github.com/KevinStehouwer211/RO47005-PDM-Project.git
+git clone https://github.com/tommasocalzolari/RO47005-PDM-Project.git
 cd RO47005-PDM-Project/
 
 conda create -n drones python=3.10
