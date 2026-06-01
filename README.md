@@ -1,13 +1,4 @@
-# RO47005 Planning and Dicision Making Project
-
-## Original Framework
-
-This project is based on the gym-pybullet-drones framework.
-For a full description of the simulation environment, installation
-instructions, and baseline controllers, please refer to the original
-repository:
-
-https://github.com/utiasDSL/gym-pybullet-drones
+# Autonomous Drone Navigation with RRT* and MPC
 
 ## Contributors
 
@@ -36,25 +27,52 @@ https://github.com/utiasDSL/gym-pybullet-drones
 
 ## About
 
-This repository contains a complete path planning pipeline for group 34 of the RO47005 'Planning and Dicision Making' course project. The objective of the project is to autonomously navigate a quadrotor from a start location (A) to a goal location (B) in a three-dimensional environment containing static obstacles, by computing and tracking a collision-free trajectory. See figure 1 for a demo:
+This repository contains a complete autonomous drone navigation pipeline developed for the TU Delft RO47005 **Planning and Decision Making** course project. The objective is to navigate a quadrotor from a start location to a goal location in a three-dimensional environment with static obstacles by computing and tracking a collision-free trajectory.
+
+The project combines **RRT/RRT\*** for global path planning with **Model Predictive Control (MPC)** for local trajectory tracking and obstacle avoidance. The simulation environment is based on `gym-pybullet-drones`, extended with custom obstacles, planning logic, and a complete path-planning pipeline.
 
 <p align="center">
   <img src="PDM_project/images/Pipeline_demo.gif" width="500">
   <br>
-  <em>Figure 1: Global path planning using RRT* (left) and local trajectory tracking with MPC (right).</em>
+  <em>Figure 1: Global path planning using RRT* and local trajectory tracking with MPC.</em>
 </p>
 
+The global planner computes a feasible path through the obstacle field, while the MPC controller tracks the resulting trajectory and reacts to obstacles encountered during flight. The environment was extended in `env.py`, the RRT/RRT* planner is implemented in `RRT.py`, the MPC controller in `MPC.py`, and the full pipeline is executed from `main.py`.
 
- This repository extends and builds upon the forked repository `gym_pybullet_drones` which includes the base of the environent and quadrotor dynamics. Furthermore, for the objective stated above, the incremental sampling-based method Rapidly-exploring Random Tree (`RRT.py`, figure 2) will be used for global path planning, since it performs well in high-dimensional configuration spaces and provides asymptotic optimality and probabilistic completeness as the number of iterations approaches infinity, meaning that the probability of finding a feasible path approaches one if such a path exists, and that the cost of the solution converges to the optimal solution over time. However, for this project, a variant of RRT* has been used to speed up the path planning process by returning the first feasible path found. By doing this, as the number of iterations approaches infinity, the probability of finding a feasible path still approaches one if such a path exists but, the cost of the solution does not converge to the optimal solution over time since it does not update the path after finding the first feasible solution. In addition, Model Predictive Control (`MPC.py`, figure 2) will be used for local path planning, as it enables to avoid encountered obstacles during flight. MPC plans over a finite prediction horizon, explicitly handles constraints, and recomputes the control inputs at each time step based on updated state information, meaning that it is perfectly suited for the objective. 
- 
 <p align="center">
   <img src="PDM_project/images/RRT.png" height="300">
   <img src="PDM_project/images/MPC_demo.gif" height="300">
   <br>
-  <em>Figure 2: Global path planning using RRT* (left) and local trajectory tracking with MPC (right).</em>
+  <em>Figure 2: RRT* global path planning (left) and MPC-based local trajectory tracking (right).</em>
 </p>
- 
- The environment of py-bullet-drones has been extended by placing obstacles which the quadrotor has to avoid in `env.py`. Finally, to combine the methods in a complete pipeline, `main.py` has been developed.
+
+---
+
+## My Contribution
+
+My main contribution was the development and validation of the MPC-based local obstacle-avoidance logic in `MPC.py`.
+
+More specifically, I worked on unknown obstacle avoidance during flight, testing different avoidance strategies, obstacle representations, and geometric simplifications to make the controller react reliably to obstacles encountered along the planned path. I iteratively tested and validated these approaches in simulation until reaching the current working solution, where the quadrotor can track the global RRT/RRT* trajectory while locally adjusting its motion to avoid unexpected obstacles.
+
+This work focused on the integration between trajectory tracking, local planning, and real-time obstacle avoidance within the simulated quadrotor pipeline.
+
+---
+
+## Full Report
+
+A detailed explanation of the project, including the planning formulation, control approach, implementation details, and results, is available here:
+
+[Project report](project_report.pdf)
+
+---
+
+## Original Framework
+
+This project builds on the open-source `gym-pybullet-drones` framework.
+
+For a full description of the simulation environment, installation instructions, and baseline controllers, please refer to the original repository:
+
+https://github.com/utiasDSL/gym-pybullet-drones
 
 ---
 
