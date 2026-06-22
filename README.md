@@ -25,7 +25,7 @@
 
 ---
 
-## About
+## About 
 
 This repository contains a complete autonomous drone navigation pipeline developed for the TU Delft RO47005 **Planning and Decision Making** course project. The objective is to navigate a quadrotor from a start location to a goal location in a three-dimensional environment with static obstacles by computing and tracking a collision-free trajectory.
 
